@@ -26,6 +26,7 @@
 <br/>
 <h1>AstroNvim</h1>
 
+
 <ul>
   <li><a href="../index.html">Index</a></li>
 </ul>
@@ -38,24 +39,26 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><strong>core.utils.git</strong></li>
-  <li><a href="../modules/core.utils.html">core.utils</a></li>
-  <li><a href="../modules/core.utils.updater.html">core.utils.updater</a></li>
-</ul>
-<h2>Examples</h2>
-<ul class="nowrap">
-  <li><a href="../examples/init.lua.html">init.lua</a></li>
+  <li><a href="../modules/astronvim.bootstrap.html">astronvim.bootstrap</a></li>
+  <li><a href="../modules/astronvim.utils.buffer.html">astronvim.utils.buffer</a></li>
+  <li><strong>astronvim.utils.git</strong></li>
+  <li><a href="../modules/astronvim.utils.html">astronvim.utils</a></li>
+  <li><a href="../modules/astronvim.utils.lsp.html">astronvim.utils.lsp</a></li>
+  <li><a href="../modules/astronvim.utils.mason.html">astronvim.utils.mason</a></li>
+  <li><a href="../modules/astronvim.utils.status.html">astronvim.utils.status</a></li>
+  <li><a href="../modules/astronvim.utils.ui.html">astronvim.utils.ui</a></li>
+  <li><a href="../modules/astronvim.utils.updater.html">astronvim.utils.updater</a></li>
 </ul>
 
 </div>
 
 <div id="content">
 
-<h1>Module <code>core.utils.git</code></h1>
+<h1>Module <code>astronvim.utils.git</code></h1>
 <p>
 <h3>Git LUA API</h3>
 </p>
-<p> This module can be loaded with <code>local git = require &quot;core.utils.git&quot;</code></p>
+<p> This module can be loaded with <code>local git = require &quot;astronvim.utils.git&quot;</code></p>
     <h3>Info:</h3>
     <ul>
         <li><strong>Copyright</strong>: 2022</li>
@@ -68,6 +71,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#cmd">cmd(args)</a></td>
 	<td class="summary">Run a git command from the AstroNvim installation directory</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#available">available()</a></td>
+	<td class="summary">Check if the AstroNvim is able to reach the <a href="../modules/astronvim.utils.git.html">git</a> command</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_repo">is_repo()</a></td>
@@ -94,6 +101,10 @@
 	<td class="summary">Check if a branch contains a commit</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#branch_remote">branch_remote(branch)</a></td>
+	<td class="summary">Get the remote name for a given branch</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#remote_add">remote_add(remote, url)</a></td>
 	<td class="summary">Add a git remote</td>
 	</tr>
@@ -106,12 +117,20 @@
 	<td class="summary">Get the URL of a given git remote</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#remote_set_branches">remote_set_branches(remote, branch)</a></td>
+	<td class="summary">Get branches from a git remote</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#current_version">current_version(...)</a></td>
 	<td class="summary">Get the current version with git describe including tags</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#current_branch">current_branch(...)</a></td>
 	<td class="summary">Get the current branch</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ref_verify">ref_verify(ref, ...)</a></td>
+	<td class="summary">Verify a reference</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#local_head">local_head(...)</a></td>
@@ -142,6 +161,10 @@
 	<td class="summary">Parse a remote url</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#is_breaking">is_breaking(commit)</a></td>
+	<td class="summary">Check if a Conventional Commit commit message is breaking or not</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#breaking_changes">breaking_changes(commits)</a></td>
 	<td class="summary">Get a list of breaking commits from commit messages using Conventional Commit standard</td>
 	</tr>
@@ -169,14 +192,33 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">args</span>
-         the git arguments
+         string the git arguments
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the result of the command or nil if unsuccessful
+        string|nil # The result of the command or nil if unsuccessful
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "available"></a>
+    <strong>available()</strong>
+    </dt>
+    <dd>
+    Check if the AstroNvim is able to reach the <a href="../modules/astronvim.utils.git.html">git</a> command
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean # The result of running <code>git --help</code>
     </ol>
 
 
@@ -195,7 +237,7 @@
     <h3>Returns:</h3>
     <ol>
 
-        the result of the command
+        string|nil # ~he result of the command
     </ol>
 
 
@@ -213,14 +255,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">remote</span>
-         the remote to fetch
+         string the remote to fetch
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the result of the command
+        string|nil # The result of the command
     </ol>
 
 
@@ -247,7 +289,7 @@
     <h3>Returns:</h3>
     <ol>
 
-        the result of the command
+        string|nil # The result of the command
     </ol>
 
 
@@ -265,14 +307,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">dest</span>
-         the target to checkout
+         string the target to checkout
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the result of the command
+        string|nil # The result of the command
     </ol>
 
 
@@ -297,7 +339,7 @@
     <h3>Returns:</h3>
     <ol>
 
-        the result of the command
+        string|nil # The result of the command
     </ol>
 
 
@@ -315,20 +357,45 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">remote</span>
-         the git remote to check
+         string the git remote to check
         </li>
         <li><span class="parameter">branch</span>
-         the git branch to check
+         string the git branch to check
         </li>
         <li><span class="parameter">commit</span>
-         the git commit to check for
+         string the git commit to check for
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the result of the command
+        boolean # The result of the command
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "branch_remote"></a>
+    <strong>branch_remote(branch)</strong>
+    </dt>
+    <dd>
+    Get the remote name for a given branch
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">branch</span>
+         string the git branch to check
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string|nil # The name of the remote for the given branch
     </ol>
 
 
@@ -346,17 +413,17 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">remote</span>
-         the remote to add
+         string the remote to add
         </li>
         <li><span class="parameter">url</span>
-         the url of the remote
+         string the url of the remote
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the result of the command
+        string|nil # The result of the command
     </ol>
 
 
@@ -374,17 +441,17 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">remote</span>
-         the remote to update
+         string the remote to update
         </li>
         <li><span class="parameter">url</span>
-         the new URL of the remote
+         string the new URL of the remote
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the result of the command
+        string|nil # The result of the command
     </ol>
 
 
@@ -402,14 +469,42 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">remote</span>
-         the remote to get the URL of
+         string the remote to get the URL of
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the url of the remote
+        string|nil # The url of the remote
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "remote_set_branches"></a>
+    <strong>remote_set_branches(remote, branch)</strong>
+    </dt>
+    <dd>
+    Get branches from a git remote
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">remote</span>
+         string the remote to setup branches for
+        </li>
+        <li><span class="parameter">branch</span>
+         string the branch to setup
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string|nil # The result of the command
     </ol>
 
 
@@ -436,7 +531,7 @@
     <h3>Returns:</h3>
     <ol>
 
-        the current git describe string
+        string|nil # The current git describe string
     </ol>
 
 
@@ -463,7 +558,39 @@
     <h3>Returns:</h3>
     <ol>
 
-        the branch of the AstroNvim installation
+        string|nil # The branch of the AstroNvim installation
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ref_verify"></a>
+    <strong>ref_verify(ref, ...)</strong>
+    </dt>
+    <dd>
+    Verify a reference
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">ref</span>
+
+
+
+        </li>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string|nil # The referenced commit
     </ol>
 
 
@@ -490,7 +617,7 @@
     <h3>Returns:</h3>
     <ol>
 
-        the head string
+        string|nil # the head string
     </ol>
 
 
@@ -508,17 +635,17 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">remote</span>
-         the remote to check
+         string the remote to check
         </li>
         <li><span class="parameter">branch</span>
-         the branch to check
+         string the branch to check
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the head string of the remote branch
+        string|nil # The head string of the remote branch
     </ol>
 
 
@@ -536,14 +663,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">tag</span>
-         the tag to resolve
+         string the tag to resolve
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the commit hash of a git tag
+        string|nil # The commit hash of a git tag
     </ol>
 
 
@@ -561,17 +688,17 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">start_hash</span>
-         the start commit hash
+        ? string the start commit hash
         </li>
         <li><span class="parameter">end_hash</span>
-         the end commit hash
+        ? string the end commit hash
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        an array like table of commit messages
+        string[] # An array like table of commit messages
     </ol>
 
 
@@ -589,14 +716,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">search</span>
-         a regex to search the tags with (defaults to "v*" for version tags)
+        ? string a regex to search the tags with (defaults to "v*" for version tags)
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        an array like table of tags that match the search
+        string[] # An array like table of tags that match the search
     </ol>
 
 
@@ -614,14 +741,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">versions</span>
-         a list of versions to search (defaults to all versions available)
+        ? table a list of versions to search (defaults to all versions available)
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the latest version from the array
+        string|nil # The latest version from the array
     </ol>
 
 
@@ -639,14 +766,39 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">str</span>
-         the remote to parse to a full git url
+         string the remote to parse to a full git url
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        the full git url for the given remote string
+        string # The full git url for the given remote string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_breaking"></a>
+    <strong>is_breaking(commit)</strong>
+    </dt>
+    <dd>
+    Check if a Conventional Commit commit message is breaking or not
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">commit</span>
+         string a commit message
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean true if the message is breaking, false if the commit message is not breaking
     </ol>
 
 
@@ -664,14 +816,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">commits</span>
-         an array like table of commit messages
+         string[] an array like table of commit messages
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        an array like table of commits that are breaking
+        string[] # An array like table of commits that are breaking
     </ol>
 
 
@@ -689,14 +841,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">commits</span>
-         an array like table of commit messages
+         string[] an array like table of commit messages
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        an array like table of echo messages to provide to nvim_echo or astronvim.echo
+        string[][] # An array like table of echo messages to provide to nvim_echo or astronvim.echo
     </ol>
 
 
@@ -709,8 +861,8 @@
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
-<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-09-23 11:35:12 </i>
+<i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
+<i style="float:right;">Last updated 2023-05-24 07:47:44 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

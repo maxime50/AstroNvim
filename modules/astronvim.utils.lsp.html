@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>AstroNvim API</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>AstroNvim</h1>
+
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/astronvim.bootstrap.html">astronvim.bootstrap</a></li>
+  <li><a href="../modules/astronvim.utils.buffer.html">astronvim.utils.buffer</a></li>
+  <li><a href="../modules/astronvim.utils.git.html">astronvim.utils.git</a></li>
+  <li><a href="../modules/astronvim.utils.html">astronvim.utils</a></li>
+  <li><strong>astronvim.utils.lsp</strong></li>
+  <li><a href="../modules/astronvim.utils.mason.html">astronvim.utils.mason</a></li>
+  <li><a href="../modules/astronvim.utils.status.html">astronvim.utils.status</a></li>
+  <li><a href="../modules/astronvim.utils.ui.html">astronvim.utils.ui</a></li>
+  <li><a href="../modules/astronvim.utils.updater.html">astronvim.utils.updater</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>astronvim.utils.lsp</code></h1>
+<p>
+<h3>AstroNvim LSP Utils</h3>
+
+<p> LSP related utility functions to use within AstroNvim and user configurations.</p>
+</p>
+<p> This module can be loaded with <code>local lsp_utils = require(&quot;astronvim.utils.lsp&quot;)</code></p>
+    <h3>See also:</h3>
+    <ul>
+         <a href="../modules/astronvim.utils.html#">astronvim.utils</a>
+    </ul>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Copyright</strong>: 2022</li>
+        <li><strong>License</strong>: GNU General Public License v3.0</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#setup">setup(server)</a></td>
+	<td class="summary">Helper function to set up a given server with the Neovim LSP client</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#has_capability">has_capability(capability, filter)</a></td>
+	<td class="summary">Helper function to check if any active LSP clients given a filter provide a specific capability</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_attach">on_attach(client, bufnr)</a></td>
+	<td class="summary">The <a href="../modules/astronvim.utils.lsp.html#on_attach">on_attach</a> function used by AstroNvim</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#config">config(server_name)</a></td>
+	<td class="summary">Get the server configuration for a given language server to be provided to the server's <code>setup()</code> call</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#capabilities">capabilities</a></td>
+	<td class="summary">The default AstroNvim LSP capabilities</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "setup"></a>
+    <strong>setup(server)</strong>
+    </dt>
+    <dd>
+    Helper function to set up a given server with the Neovim LSP client
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">server</span>
+         string The name of the server to be setup
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "has_capability"></a>
+    <strong>has_capability(capability, filter)</strong>
+    </dt>
+    <dd>
+    Helper function to check if any active LSP clients given a filter provide a specific capability
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">capability</span>
+         string The server capability to check for (example: "documentFormattingProvider")
+        </li>
+        <li><span class="parameter">filter</span>
+
+<p> vim.lsp.get<em>active</em>clients.filter|nil (table|nil) A table with</p>
+<pre><code>          key-value pairs used to filter the returned clients.
+          The available keys are:
+           - id (number): Only return clients with the given id
+           - bufnr (number): Only return clients attached to this buffer
+           - name (string): Only return clients with the given name
+</code></pre>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean # Whether or not any of the clients provide the capability
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_attach"></a>
+    <strong>on_attach(client, bufnr)</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/astronvim.utils.lsp.html#on_attach">on_attach</a> function used by AstroNvim
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">client</span>
+         table The LSP client details when attaching
+        </li>
+        <li><span class="parameter">bufnr</span>
+         number The buffer that the LSP client is attaching to
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "config"></a>
+    <strong>config(server_name)</strong>
+    </dt>
+    <dd>
+    Get the server configuration for a given language server to be provided to the server's <code>setup()</code> call
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">server_name</span>
+         string The name of the server
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table # The table of LSP options used when setting up the given language server
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "capabilities"></a>
+    <strong>capabilities</strong>
+    </dt>
+    <dd>
+    The default AstroNvim LSP capabilities
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
+<i style="float:right;">Last updated 2023-05-24 07:47:44 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
