@@ -7,7 +7,7 @@ return {
       "MasonUninstall",
       "MasonUninstallAll",
       "MasonLog",
-      "MasonUpdate", -- AstroNvim extension here as well
+      "MasonUpdate",    -- AstroNvim extension here as well
       "MasonUpdateAll", -- AstroNvim specific
     },
     opts = {
@@ -17,6 +17,28 @@ return {
           package_uninstalled = "✗",
           package_pending = "⟳",
         },
+      },
+      ensure_installed = {
+        "css-lsp",
+        "docker-compose-language-service",
+        "dockerfile-language-server",
+        "eslint-lsp",
+        "hadolint",
+        "html-lsp",
+        "json-lsp",
+        "lua-language-server",
+        "marksman",
+        "prettier",
+        "selene",
+        "shellcheck",
+        "shfmt",
+        "stylelint",
+        "stylua",
+        "svelte-language-server",
+        "tailwindcss-language-server",
+        "typescript-language-server",
+        "vim-language-server",
+        "yaml-language-server",
       },
     },
     build = ":MasonUpdate",

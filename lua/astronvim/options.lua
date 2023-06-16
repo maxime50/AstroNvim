@@ -28,7 +28,7 @@ local options = astronvim.user_opts("options", {
     number = true, -- Show numberline
     preserveindent = true, -- Preserve indent structure as much as possible
     pumheight = 10, -- Height of the pop up menu
-    relativenumber = true, -- Show relative numberline
+    -- relativenumber = true, -- Show relative numberline
     scrolloff = 8, -- Number of lines to keep above and below the cursor
     shiftwidth = 2, -- Number of space inserted for indentation
     showmode = false, -- Disable showing modes in command line
@@ -56,7 +56,7 @@ local options = astronvim.user_opts("options", {
     autopairs_enabled = true, -- enable autopairs at start
     cmp_enabled = true, -- enable completion at start
     codelens_enabled = true, -- enable or disable automatic codelens refreshing for lsp that support it
-    diagnostics_mode = 3, -- set the visibility of diagnostics in the UI (0=off, 1=only show in status line, 2=virtual text off, 3=all on)
+    diagnostics_mode = 2, -- set the visibility of diagnostics in the UI (0=off, 1=only show in status line, 2=virtual text off, 3=all on)
     highlighturl_enabled = true, -- highlight URLs by default
     icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available)
     lsp_handlers_enabled = true, -- enable or disable default vim.lsp.handlers (hover and signatureHelp)

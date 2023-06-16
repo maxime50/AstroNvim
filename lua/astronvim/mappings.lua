@@ -17,6 +17,17 @@ local sections = {
   S = { desc = get_icon("Session", 1, true) .. "Session" },
   t = { desc = get_icon("Terminal", 1, true) .. "Terminal" },
 }
+if not vim.g.icons_enabled then vim.tbl_map(function(opts) opts.desc = opts.desc:gsub("^.* ", "") end, sections) end
+-- New tab
+maps.n["te"] = { ":tabedit", desc = "Tab edit" }
+-- Split window
+maps.n["ss"] = { ":split<Return><C-w>w", desc = "Split Horizontal" }
+maps.n["sv"] = { ":vsplit<Return><C-w>w", desc = "Split Vertical" }
+-- Move window
+maps.n["sh"] = { "<C-w>h", desc = "Go left" }
+maps.n["sk"] = { "<C-w>k", desc = "Go top" }
+maps.n["sj"] = { "<C-w>j", desc = "Go bottom" }
+maps.n["sl"] = { "<C-w>l", desc = "Go right" }
 
 -- Normal --
 -- Standard Operations
@@ -48,9 +59,9 @@ maps.n["<leader>pl"] = { "<cmd>AstroChangelog<cr>", desc = "AstroNvim Changelog"
 -- Manage Buffers
 maps.n["<leader>c"] = { function() require("astronvim.utils.buffer").close() end, desc = "Close buffer" }
 maps.n["<leader>C"] = { function() require("astronvim.utils.buffer").close(0, true) end, desc = "Force close buffer" }
-maps.n["]b"] =
+maps.n["<S-l>"] =
   { function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end, desc = "Next buffer" }
-maps.n["[b"] = {
+maps.n["<S-h>"] = {
   function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
   desc = "Previous buffer",
 }
@@ -262,8 +273,8 @@ if is_available "telescope.nvim" then
   maps.n["<leader>fc"] =
     { function() require("telescope.builtin").grep_string() end, desc = "Find for word under cursor" }
   maps.n["<leader>fC"] = { function() require("telescope.builtin").commands() end, desc = "Find commands" }
-  maps.n["<leader>ff"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" }
-  maps.n["<leader>fF"] = {
+  maps.n["sf"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" }
+  maps.n["sF"] = {
     function() require("telescope.builtin").find_files { hidden = true, no_ignore = true } end,
     desc = "Find all files",
   }
@@ -278,8 +289,8 @@ if is_available "telescope.nvim" then
   maps.n["<leader>fr"] = { function() require("telescope.builtin").registers() end, desc = "Find registers" }
   maps.n["<leader>ft"] =
     { function() require("telescope.builtin").colorscheme { enable_preview = true } end, desc = "Find themes" }
-  maps.n["<leader>fw"] = { function() require("telescope.builtin").live_grep() end, desc = "Find words" }
-  maps.n["<leader>fW"] = {
+  maps.n["st"] = { function() require("telescope.builtin").live_grep() end, desc = "Find words" }
+  maps.n["sT"] = {
     function()
       require("telescope.builtin").live_grep {
         additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
@@ -323,10 +334,10 @@ if is_available "toggleterm.nvim" then
   maps.n["<leader>tf"] = { "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" }
   maps.n["<leader>th"] = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "ToggleTerm horizontal split" }
   maps.n["<leader>tv"] = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "ToggleTerm vertical split" }
-  maps.n["<F7>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" }
-  maps.t["<F7>"] = maps.n["<F7>"]
-  maps.n["<C-'>"] = maps.n["<F7>"] -- requires terminal that supports binding <C-'>
-  maps.t["<C-'>"] = maps.n["<F7>"] -- requires terminal that supports binding <C-'>
+  maps.n["<M-o>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" }
+  maps.t["<M-o>"] = maps.n["<M-o>"]
+  maps.n["<C-'>"] = maps.n["<M-o>"]
+  maps.t["<C-'>"] = maps.n["<M-o>"]
 end
 
 if is_available "nvim-dap" then

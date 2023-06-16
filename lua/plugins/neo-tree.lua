@@ -106,18 +106,24 @@ return {
         ["<space>"] = false, -- disable space until we figure out which-key disabling
         ["[b"] = "prev_source",
         ["]b"] = "next_source",
-        o = "open",
+        o = "system_open",
         O = "system_open",
-        h = "parent_or_close",
-        l = "child_or_open",
+        h = "close_node",
+        l = "open",
         Y = "copy_selector",
+        s = false, -- disable split
+        S = false, -- disable split
       },
     },
     filesystem = {
       follow_current_file = true,
       hijack_netrw_behavior = "open_current",
       use_libuv_file_watcher = true,
+      -- commands = global_commands,
     },
+    -- buffers = { commands = global_commands },
+    -- git_status = { commands = global_commands },
+    -- diagnostics = { commands = global_commands },
     event_handlers = {
       {
         event = "neo_tree_buffer_enter",

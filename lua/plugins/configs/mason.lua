@@ -20,6 +20,13 @@ return function(_, opts)
     { desc = "Update Mason Packages" }
   )
 
+  -- Install opts.ensure_installed list
+  -- local mr = require "mason-registry"
+  -- for _, tool in ipairs(opts.ensure_installed) do
+  --   local p = mr.get_package(tool)
+  --   if not p:is_installed() then p:install() end
+  -- end
+
   for _, plugin in ipairs { "mason-lspconfig", "mason-null-ls", "mason-nvim-dap" } do
     pcall(require, plugin)
   end
